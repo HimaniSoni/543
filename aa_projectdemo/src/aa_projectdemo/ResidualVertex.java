@@ -1,0 +1,90 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package aa_projectdemo;
+import java.util.*;
+/**
+ *
+ * @author Himani Soni
+ */
+public class ResidualVertex {
+        public List<ResidualEdge> nextEdgeList; //the next connected edge of this residual vertex
+	private String name; //the name of the residual vertex
+	private boolean visited; //if this residual vertex is visited
+	private double height;
+	private double excess;
+	
+	/**
+     * allows you to setup the name of the residual vertex
+     * the initial value for visited is false
+     * @param name  the name of the residual vertex
+     */
+	public ResidualVertex(Object name) {
+		this.name = String.valueOf(name);
+		this.visited = false;
+		this.nextEdgeList = new LinkedList<>();
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public boolean isVisited() {
+		return visited;
+	}
+	
+	public void setVisited() {
+		this.visited = true;
+	}
+	
+	public void setUnvisited() {
+		this.visited = false;
+	}
+	
+	public boolean hasUnvisitedNeigh() {
+		for (int i = 0; i < nextEdgeList.size(); i++) {
+			ResidualEdge e = nextEdgeList.get(i);
+			ResidualVertex v = e.getSecondPoint();
+			if (!v.isVisited()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public ResidualVertex getNeigh() {
+		for (int i = 0; i < nextEdgeList.size(); i++) {
+			ResidualEdge e = nextEdgeList.get(i);
+			ResidualVertex v = e.getSecondPoint();
+			if (!v.isVisited()) {
+				return v;
+			}
+		}
+		return null;
+	}
+	
+	
+	//the following is used for preflow push 
+	
+	/**
+	 * @author Todd Robbins
+	 */
+	public double getHeight() {
+		return height;
+	}
+	
+	public void setHeight(double height) {
+		this.height = height;
+	}
+	
+	public double getExcess() {
+		return excess;
+	}
+
+	public void setExcess(double excess) {
+		this.excess = excess;
+	}
+    
+}
